@@ -1,0 +1,377 @@
+/*
+
+1. Reset
+2. Heading
+3. Content
+4. Footer
+X. Responsive
+*/
+/*-------------------------------- */
+/* ---------- 0. Reset  ---------- */
+/*-------------------------------- */
+
+body {
+    font-family: "Autour One";
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+
+.clearfix {
+    overflow: auto;
+    clear: both;
+}
+
+.hidden {
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.3em;
+}
+
+h2.question,
+h3.question {
+    margin-top: 15px;
+}
+
+label {
+    display: block;
+}
+
+@media screen and (max-width: 767px) {
+    .col-0-m {
+        display: none;
+    }
+    .col-3-m {
+        width: 25%;
+    }
+    .col-4-m {
+        width: 33.33%
+    }
+    .col-6-m {
+        width: 50%;
+    }
+
+    .col-8-m {
+      width: 66.66%;
+    }
+    .col-12-m {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .col-0-t {
+        display: none;
+    }
+    .col-3-t {
+        width: 25%;
+    }
+    .col-4-t {
+        width: 33.33%
+    }
+    .col-6-t {
+        width: 50%;
+    }
+
+    .col-8-t {
+      width: 66.66%;
+    }
+
+    .col-12-t {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .col-0-d {
+        display: none;
+    }
+    .col-3-d {
+        width: 25%;
+    }
+    .col-4-d {
+        width: 33.33%
+    }
+    .col-6-d {
+        width: 50%;
+    }
+
+    .col-8-d {
+      width: 66.66%;
+    }
+
+    .col-12-d {
+        width: 100%;
+    }
+}
+
+#info-box {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    background: #fffdfd;
+    width: 100%;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+#info-bar {
+    background: darkgrey;
+    position: fixed;
+    width: 100%;
+    padding: 1px;
+    margin-top: -22px;
+}
+
+div.marker {
+    color: red;
+    position: relative;
+}
+
+/*--------------------------------- */
+/* ---------- 1. Heading ---------- */
+/*--------------------------------- */
+
+header {
+    background: #95A2AC;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1.logo-heading {
+    display: flex;
+}
+
+h3.logo-subheading {
+    margin-left: 15px;
+}
+
+.logo-letter {
+    padding: 0;
+    margin: 0;
+    font-size: 2em;
+    line-height: 1em;
+}
+
+.logo-letter:nth-child(2n) {
+    color: #DF0000;
+}
+
+#site-logo:hover .logo-letter:nth-child(2n) {
+    transform: rotate(-15deg);
+    transition: transform 0.5s;
+}
+
+.logo-letter:nth-child(2n+1) {
+    color: #0088AD;
+}
+
+#site-logo:hover .logo-letter:nth-child(2n+1) {
+    transform: rotate(15deg);
+    transition: transform 0.5s;
+}
+
+#top-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#top-menu ul li.top-menu-item {
+    padding: 10px;
+    color: white;
+    font-weight: 100;
+}
+
+#top-menu ul li.top-menu-item:hover img, #top-menu ul li.top-menu-item:hover h4 {
+    transform: rotate(-15deg);
+    transition: transform 0.5s;
+}
+
+#top-menu ul li.top-menu-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#top-menu ul li.top-menu-item img {
+    height: 50px;
+}
+
+li.dropdown {
+    font-size: 50px;
+    /* width: 75px; */
+}
+
+li.dropdown li {
+    margin: 10px;
+}
+
+li.dropdown li {
+    display: list-item;
+}
+/*--------------------------------- */
+/* ---------- 2. Content ---------- */
+/*--------------------------------- */
+
+#site-content {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    height: 100%
+}
+
+#lion-left, #lion-right {
+  max-width: 85%;
+  padding: 30px 0;
+  margin: auto;
+  display: block;
+}
+
+#lion-left {
+    -webkit-transform: rotateY(180deg);
+    /* Safari */
+    transform: rotateY(180deg);
+}
+
+h1.site-heading {
+    text-align: center;
+    margin: 30px;
+}
+
+#main-container {
+  padding: 30px;
+}
+
+#menu-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    padding: 10px;
+    height: 100px;
+    width: 100px;
+    background: #DF0000;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    transform: rotate(10deg);
+    border-radius: 15px;
+    float: left;
+    justify-content: center;
+}
+
+.menu-item:nth-child( 2n+1) {
+    background: #0088AD;
+}
+
+.menu-item:hover {
+    transform: rotate( -10deg);
+    transition: transform 0.5s;
+}
+
+.menu-item:hover a {
+    transform: rotate( 10deg);
+    transition: transform 0.5s;
+}
+
+.menu-item a {
+    transform: rotate( -10deg);
+    color: white;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th.table-column {
+    padding: 5px;
+}
+
+td.table-column.lp, td.table-column.score, td.table-column.badge, td.table-column.met {
+    text-align: center;
+}
+
+td.table-column {
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+#ranking-table tr {
+    border-bottom: 2px solid black;
+    line-height: 2em;
+}
+/*--------------------------------- */
+/* ---------- 4. Footer  ---------- */
+/*--------------------------------- */
+
+footer {
+    text-align: center;
+    padding: 30px;
+    bottom: 0;
+    height: 20px;
+}
+
+/*------------------------------------- */
+/* ---------- 5. Responsive  ---------- */
+/*------------------------------------- */
+
+/* -- mobile -- */
+@media screen and (max-width: 767px) {}
+
+/* -- tablet -- */
+@media screen and (min-width: 768px) and (max-width: 1024px) {}
+
+
+/* -- mobile & tablet -- */
+@media screen and (max-width: 1024px) {
+    header {
+        display: block;
+    }
+    header>div, header>nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #top-menu ul li.top-menu-item {
+      max-width: 80px;
+    }
+}
+
+/* -- desktop -- */
+@media screen and (min-width: 768px) and (max-width: 1024px) {}
+
+  /*------------------------------------- */
+  /* ------------ 6. Ankieta  ----------- */
+  /*------------------------------------- */
+
+.subcategory-toggle {
+    display: inline-flex;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid black;
+}
+
+.subcategory-toggle:hover,
+.subcategory-toggle:active {
+    background: black;
+    color: white;
+}
