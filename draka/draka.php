@@ -23,13 +23,13 @@ get_plugin_part_template( 'advanced-custom-fields' );
 get_plugin_part_template( 'core/PageTemplater' );
 get_plugin_part_template( 'core/Draka' );
 
-add_action('wp_loaded', 'Draka');
-function Draka() {
-  // global $draka;
-  $draka = Draka::get_instance();
-  //
-  // $draka->set_user_info( get_userdata( get_current_user_id() ) );
-}
+// add_action('wp_loaded', 'Draka');
+// function Draka() {
+//   // global $draka;
+//   $draka = Draka::get_instance();
+//   //
+//   // $draka->set_user_info( get_userdata( get_current_user_id() ) );
+// }
 
 function register_draka_menus() {
 	register_nav_menus( array(
@@ -53,15 +53,13 @@ function alertt( $obj ) {
 }
 
 register_activation_hook( __FILE__, 'draka_install');
-
 function draka_install() {
-  global $draka;
+  $draka = Draka::get_instance();
   $draka->install();
 }
 
-// register_deactivation_hook( __FILE__, 'draka_uninstall');
-
+register_uninstall_hook( __FILE__, 'draka_uninstall');
 function draka_uninstall() {
-  global $draka;
+  $draka = Draka::get_instance();
   $draka->uninstall();
 }

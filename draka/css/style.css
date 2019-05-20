@@ -39,6 +39,16 @@ h3.question {
     margin-top: 15px;
 }
 
+h3.warning {
+    padding: 20px;
+    background: red;
+    color: white;
+}
+
+h3.warning > a {
+    color: black;
+}
+
 label {
     display: block;
 }
@@ -239,6 +249,12 @@ li.dropdown li {
   display: block;
 }
 
+#lion-left.sticky,
+#lion-right.sticky {
+  top: 30px;
+  position: sticky;
+}
+
 #lion-left {
     -webkit-transform: rotateY(180deg);
     /* Safari */
@@ -318,6 +334,91 @@ td.table-column {
     border-bottom: 2px solid black;
     line-height: 2em;
 }
+
+input#send {
+    /* position: sticky; */
+    /* bottom: 20px; */
+    /* left: 60%; */
+    background: #3287ab;
+    color: white;
+    border: 3px solid black;
+    font-family: inherit;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+input#send:active {
+    padding: 5px;
+    margin: 5px;
+}
+
+div#info_box {
+    /* position: sticky; */
+    /* bottom: 100px; */
+    /* left: 60%; */
+    background: green;
+    border: 3px solid black;
+    color: white;
+    padding: 5px;
+    max-width: 300px;
+    margin-bottom: 5px;
+}
+
+div#submit-info-box {
+    position: sticky;
+    bottom: 10px;
+    left: 45%;
+    max-width: 300px;
+    text-align: right;
+}
+
+label.draka_answer {
+    line-height: 1.7em;
+}
+
+.ranking-table-container {
+    overflow: auto;
+    margin-top: 30px;
+}
+
+.choose-met-container {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button.choose-met {
+  border: 3px solid transparent;
+  background: white;
+  border-radius: 10px;
+  padding: 4px 5px;
+}
+
+button.choose-met.active {
+  border: 3px solid black;
+  border-radius: 10px;
+  border-bottom-right-radius: 0px;
+  background: black;
+  padding: 4px 5px;
+}
+
+button.choose-met:focus {
+    outline: none;
+}
+
+thead, tbody { display: block; }
+
+tbody {
+    overflow-y: hidden;    /* Trigger vertical scroll    */
+    overflow-x: auto;  /* Hide the horizontal scroll */
+}
+
+@media screen and (max-width: 768px) {
+  tbody {
+    width: 80vw;
+  }
+}
+
 /*--------------------------------- */
 /* ---------- 4. Footer  ---------- */
 /*--------------------------------- */

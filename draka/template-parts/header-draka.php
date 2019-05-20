@@ -37,31 +37,27 @@
           </li>
           <li class="top-menu-item item-3">
             <a href="<?php echo get_site_url() . '/wp-admin/profile.php'; ?>">
-              <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Moje konto">
-              <h4 class="menu-heading">Moje konto</h4>
+              <?php
+                $wybrana_metodyka = get_field('wybrana_metodyka', 'user_'. get_current_user_id() );
+                if( $wybrana_metodyka ) :
+              ?>
+                <img src="<?php echo DRAKA_URL . 'img/header/znak-met-' . $wybrana_metodyka . '.png'; ?>" alt="Moje konto">
+                <h4 class="menu-heading">Moje konto</h4>
+              <?php else: ?>
+                <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Moje konto">
+                <h4 class="menu-heading">Zaloguj</h4>
+              <?php endif; ?>
+
             </a>
           </li>
           <?php if( !is_user_logged_in() ): ?>
-          <li class="top-menu-item item-4">
-            <a href="">
-              <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Zaloguj">
-              <h4 class="menu-heading">Zaloguj</h4>
-            </a>
-          </li>
+
           <?php else: ?>
           <li class="top-menu-item item-4">
-            <a href="">
+            <a href="<?php echo wp_logout_url(); ?>">
               <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Zaloguj">
               <h4 class="menu-heading">Wyloguj</h4>
             </a>
-          </li>
-          <li class="dropdown">
-            <ul>
-            <?php
-            $wybrana_metodyka = get_field('wybrana_metodyka', 'user_'. get_current_user_id() );
-            echo "<li class='dropdown-menu-item'><a href='" . get_site_url() . "/wp-admin/profile.php'>" . $wybrana_metodyka . "</a></li>";
-            ?>
-            </ul>
           </li>
           <?php endif; ?>
         </ul>
