@@ -63,3 +63,38 @@ function draka_uninstall() {
   $draka = Draka::get_instance();
   $draka->uninstall();
 }
+
+function mytheme_customize_register( $wp_customize_draka ) {
+  $wp_customize_draka->add_panel('settings_panel_draka',array(
+      'title'=>'Draka',
+      'description'=> 'Tutaj możesz dokonać zmiany ustawień',
+      'priority'=> 15,
+  ));
+      $wp_customize_draka->add_section('contat_section_menu',array(
+          'title'=>'Menu',
+          'priority'=>15,
+          'panel'=>'settings_panel_draka',
+      ));
+              // telefon komórkowy
+          $wp_customize_draka->add_setting('default_mainpage_url',array(
+              'default' => __('#', 'draka'),
+					));
+          $wp_customize_draka->add_control('control_mainpage_url',array(
+              'label'=>'Strona główna',
+              'type'=>'text',
+              'section'=>'contat_section_menu',
+              'settings'=>'default_mainpage_url',
+					));
+
+              // telefon
+          $wp_customize_draka->add_setting('default_ranking_url',array(
+              'default' => __('#', 'draka'),
+					));
+          $wp_customize_draka->add_control('control_ranking_url',array(
+              'label'=>'Strona rankingu',
+              'type'=>'text',
+              'section'=>'contat_section_menu',
+              'settings'=>'default_ranking_url',
+					));
+}
+add_action( 'customize_register', 'mytheme_customize_register' );

@@ -3,11 +3,16 @@
 
 <?php
 
-if( !is_user_logged_in() ) {
-  echo "<h3 class='warning'>Uwaga! Bez zalogowania część funkcjonalności może nie działać. <a href='" . wp_logout_url() . "'>Zaloguj się!</a></h3>";
-}
 $draka = Draka::get_instance();
 $draka->load_answers();
+
+if( !is_user_logged_in() ) {
+  echo "<h3 class='warning'>Uwaga! Bez zalogowania część funkcjonalności może nie działać. <a href='" . wp_login_url() . "'>Zaloguj się!</a></h3>";
+} elseif( ! $draka->get_user_met() ) {
+  echo "<h3 class='warning'>Uwaga! Nie masz wybranej metodyki. Przejdź do  <a href='" . get_edit_profile_url() . "'>panelu edycji profilu</a> i zaktualizuj informacje</h3>";
+}
+
+
 
 $kategorie = get_terms( 'draka_category', array(
     'hide_empty' => true,

@@ -51,13 +51,6 @@ class Draka {
 		add_action('wp_ajax_draka_seek_results_callback', array( $this, 'seek_results_callback' ) );
 	}
 
-	/**
-	 * Destructor for class
-	 */
-	public function __destruct() {
-		// self::uninstall();
-	}
-
 	public static function get_instance() {
 		if ( null == self::$instance ) {
 			self::$instance = new Draka();
@@ -198,8 +191,13 @@ class Draka {
 	  if( $user_rows_affected == 1 ){
 	    echo "Wynik został zapisany.<br>Suma punktów: $score";
 	  } else {
-			var_dumb( $this->get_user_level() );
-	    echo "Błąd. Skontaktuj się z administatorem";
+			if( !is_user_logged_in() ) {
+				echo "Zmiany NIE zostały zapisane. <a href='" . wp_logout_url() . "'>Zaloguj się!</a>";
+			} elseif( !$this->user_info->user_met ) {
+				echo "Zmiany NIE zostały zapisane. <a href='" . get_edit_profile_url() . "'>Nie masz wybranej metodyki</a>";
+			} else {
+				echo "<br>Błąd. Skontaktuj się z administatorem";
+			}
 	  }
 	  die(); // this is required to return a proper result
 	}

@@ -1,3 +1,8 @@
+<?php
+  $draka_mainpage_url = get_theme_mod('default_mainpage_url');
+  $draka_ranking_url = get_theme_mod('default_ranking_url');
+?>
+
 <!DOCTYPE html>
 <html lang="pl" dir="ltr">
   <head>
@@ -24,13 +29,13 @@
       <nav id="top-menu">
         <ul>
           <li class="top-menu-item item-1">
-            <a href="<?php echo get_site_url(); ?>">
+            <a href="<?php echo $draka_mainpage_url; ?>">
               <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Strona Główna">
               <h4 class="menu-heading">Strona Główna</h4>
             </a>
           </li>
           <li class="top-menu-item item-2">
-            <a href="">
+            <a href="<?php echo $draka_ranking_url; ?>">
               <img src="<?php echo DRAKA_URL . 'img/header/ranking.png'; ?>" alt="Ranking">
               <h4 class="menu-heading">Ranking</h4>
             </a>
@@ -45,13 +50,18 @@
                 <h4 class="menu-heading">Moje konto</h4>
               <?php else: ?>
                 <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Moje konto">
-                <h4 class="menu-heading">Zaloguj</h4>
+                <h4 class="menu-heading">Moje konto</h4>
               <?php endif; ?>
 
             </a>
           </li>
           <?php if( !is_user_logged_in() ): ?>
-
+            <li class="top-menu-item item-4">
+              <a href="<?php echo wp_login_url(); ?>">
+                <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Zaloguj">
+                <h4 class="menu-heading">Wyloguj</h4>
+              </a>
+            </li>
           <?php else: ?>
           <li class="top-menu-item item-4">
             <a href="<?php echo wp_logout_url(); ?>">
