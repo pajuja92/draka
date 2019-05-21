@@ -13,6 +13,7 @@ class Draka {
 	private $is_answers_empty;
 	private $user_answers;
 	private $answers;
+	private $answers_levels;
 	private $user_info = array();
 	private $last_answers;
 
@@ -76,7 +77,7 @@ class Draka {
 
 		$answer_table_name = $wpdb->prefix . "draka_answers";
 		$sql_answers = "CREATE TABLE $answer_table_name (
-		  `id` int(11) NOT NULL,
+		  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 		  `save_id` mediumint(9) UNSIGNED NOT NULL,
 		  `name` char(9) NOT NULL,
 		  `val` char(1) NOT NULL
@@ -118,6 +119,13 @@ class Draka {
 		}
 	}
 
+	function add_answer_level( $id, $level ) {
+		if( $this->answers[ $id ] ) {
+			array_push( $this->answers[ $id ]['levels'], $level );
+			$this->answers['levels'][ $level ] += 1;
+		}
+	}
+
 	function get_answers() {
 		return $this->answers;
 	}
@@ -132,8 +140,13 @@ class Draka {
 		return $this->user_info->user_met;
 	}
 
+
 	function get_points( $id, $i ) {
 		return $this->answers[ $id ]['scores'][ $i ];
+	}
+
+	function get_level( $id, $i ) {
+		return $this->anwers[ $id ]['levels'][ $i ];
 	}
 
 	function submit_callback() {
@@ -146,8 +159,11 @@ class Draka {
 	  $this->user_answers = array();
 	  $this->user_answers = json_decode( str_replace("\\", null, $_POST['user_answers'] ) , false);
 
+
 	  $score = 0;
 	  foreach ($this->user_answers as $answer) {
+			$level_name = $this->answers[ $answer->name ][ 'levels' ][ $answer->value ];
+			$this->user_answers['levels'][ $level_name ] += 1;
 	    $score += $this->answers[ $answer->name ]['scores'][ $answer->value ];
 	  }
 
@@ -226,7 +242,20 @@ class Draka {
 	}
 
 	function get_user_level() {
-		return 'gamma';
+
+		// var_dumb( $this->answers['levels'] );
+		// var_dumb( $this->user_answers['levels'] );
+
+
+		$lvl_names = array( 'alfa', 'beta', 'gamma', 'delta' );
+		// echo "<br>" . $this->answers['levels']['alfa'] . " " . $this->user_answers['levels']['alfa'];
+		foreach ($lvl_names as $lvl_name) {
+			if( (int) $this->answers['levels'][$lvl_name] == (int) $this->user_answers['levels'][$lvl_name] &&
+					$this->user_answers['levels'][$lvl_name] != 0 ) {
+				return $lvl_name;
+			}
+		}
+		return 'brak';
 	}
 
 	function get_user_answers() {
@@ -243,6 +272,7 @@ class Draka {
 			$pyt_args = array(
 			  'name' => get_the_ID(),
 			  'scores' => array(),
+				'levels' => array(),
 			);
 
 			$this->add_answer( $pyt_args );
@@ -250,7 +280,9 @@ class Draka {
 			if( have_rows('odpowiedzi') ):
 			  while ( have_rows('odpowiedzi') ) : the_row();
 			    $punkty = (int) get_sub_field('ilosc_punktow_za_pytanie') * (int) get_field('punkty')[ 'mnoznik_' . $this->user_info->user_met ];
+					$poziom = get_sub_field('obowiazkowe_' . $this->user_info->user_met );
 					$this->add_answer_score( get_the_ID(), $punkty);
+					$this->add_answer_level( get_the_ID(), $poziom );
 			  endwhile;
 			endif;
 

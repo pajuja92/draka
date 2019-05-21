@@ -22,6 +22,10 @@ $kategorie = get_terms( 'draka_category', array(
 ?>
 <div id="site-content">
   <div id="main-container" class="col-8-d col-12-t col-12-m">
+
+
+    <div id="test"></div>
+
     <?php foreach ($kategorie as $kategoria) {  ?>
       <div class="subcategory-toggle" for="<?php echo $kategoria->slug; ?>">
         <h2><?php echo $kategoria->name; ?></h2>
@@ -70,6 +74,7 @@ $kategorie = get_terms( 'draka_category', array(
     jQuery.post("<?php echo admin_url("admin-ajax.php"); ?>", data, function(response) {
         console.log( "Response: " + response );
         jQuery("#info_box").html(response);
+        jQuery("#test").html(response);
     });
   }
 </script>
