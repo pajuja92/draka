@@ -16,6 +16,7 @@ class Draka {
 	private $answers_levels;
 	private $user_info = array();
 	private $last_answers;
+	private $user_level;
 
 	/**
 	 * Constructor for class
@@ -44,6 +45,7 @@ class Draka {
 		}
 
 		$this->set_user_info( get_userdata( get_current_user_id() ) );
+
 
 		add_action('wp_ajax_nopriv_draka_submit_callback', array( $this, 'submit_callback' ) );
 		add_action('wp_ajax_draka_submit_callback', array( $this, 'submit_callback' ) );
@@ -164,7 +166,14 @@ class Draka {
 	  foreach ($this->user_answers as $answer) {
 			$level_name = $this->answers[ $answer->name ][ 'levels' ][ $answer->value ];
 			$this->user_answers['levels'][ $level_name ] += 1;
-	    $score += $this->answers[ $answer->name ]['scores'][ $answer->value ];
+
+			$multi = $this->is_level_smaller( $this->get_user_level(1), $level_name );
+			echo "<br>" . $this->get_user_level(1) . " : " . $level_name . " = " . $multi;
+			if( $multi && $multi != 1) {
+				$score += ($this->get_points( $answer->name, $answer->value ) * $multi );
+			} else {
+				$score += $this->answers[ $answer->name ]['scores'][ $answer->value ];
+			}
 	  }
 
 		$current_time = current_time('mysql');
@@ -175,7 +184,7 @@ class Draka {
 	    'save_date' => $current_time,
 	    'user_sum' => $score,
 	    'user_met' => $this->user_info->user_met,
-	    'user_level' => $this->get_user_level()
+	    'user_level' => $this->get_user_level(1)
 	  );
 	  $user_rows_affected = $wpdb->insert( $user_table_name, $user_table_query);
 
@@ -190,7 +199,7 @@ class Draka {
 			`save_date`='" . $current_time . "' AND
 			`user_sum`='" . $score . "' AND
 			`user_met`='" . $this->user_info->user_met . "' AND
-			`user_level`='" . $this->get_user_level() . "';";
+			`user_level`='" . $this->get_user_level(1) . "';";
 
 		$id = $wpdb->get_results( $id_select )[0]->save_id;
 		foreach ($this->user_answers as $answer ) {
@@ -205,7 +214,7 @@ class Draka {
 
 
 	  if( $user_rows_affected == 1 ){
-	    echo "Wynik został zapisany.<br>Suma punktów: $score";
+	    echo "Wynik został zapisany.<br>Suma punktów: $score<br>Obecny poziom: " . $this->get_user_level(1);
 	  } else {
 			if( !is_user_logged_in() ) {
 				echo "Zmiany NIE zostały zapisane. <a href='" . wp_logout_url() . "'>Zaloguj się!</a>";
@@ -230,6 +239,12 @@ class Draka {
 		$last_answers_sql = "SELECT * FROM `wp_draka_answers` WHERE `save_id`='$id'";
 		$this->last_answers = $wpdb->get_results( $last_answers_sql );
 
+
+		foreach ($this->last_answers as $answer) {
+			$level_name = $this->answers[ $answer->name ][ 'levels' ][ $answer->val ];
+			$this->last_answers['levels'][ $level_name ] += 1;
+		}
+
 		foreach ($this->last_answers as $last_answer ) {
 			?>
 			<script>
@@ -241,19 +256,18 @@ class Draka {
 		}
 	}
 
-	function get_user_level() {
-
-		// var_dumb( $this->answers['levels'] );
-		// var_dumb( $this->user_answers['levels'] );
-
-
+	function get_user_level( $mod ) {
 		$lvl_names = array( 'alfa', 'beta', 'gamma', 'delta' );
-		// echo "<br>" . $this->answers['levels']['alfa'] . " " . $this->user_answers['levels']['alfa'];
+		if ( $mod ) {
+			$this->last_answers = $this->user_answers;
+		}
+		$i = 0;
 		foreach ($lvl_names as $lvl_name) {
-			if( (int) $this->answers['levels'][$lvl_name] == (int) $this->user_answers['levels'][$lvl_name] &&
-					$this->user_answers['levels'][$lvl_name] != 0 ) {
+			if( (int) $this->answers['levels'][$lvl_name] - $i <= (int) $this->last_answers['levels'][$lvl_name] &&
+					$this->last_answers['levels'][$lvl_name] != 0 ) {
 				return $lvl_name;
 			}
+			$i += $this->last_answers['levels'][$lvl_name];
 		}
 		return 'brak';
 	}
@@ -355,7 +369,38 @@ class Draka {
 			echo "Nikt z tej metodyki nie wypełnił jeszcze ankiety";
 		endif;
 		die();
+	}
 
+	function is_level_greater( $level1, $level2 ) {
+		$levels = array(
+			'alfa' 	=> 4,
+			'beta' 	=> 3,
+			'gamma' => 2,
+			'delta' => 1,
+			'brak' 	=> 0
+		);
+
+		if( $levels[ $level1 ] > $levels[ $level2 ] ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function is_level_smaller( $level1, $level2 ) {
+		$levels = array(
+			'alfa' 	=> 4,
+			'beta' 	=> 3,
+			'gamma' => 2,
+			'delta' => 1,
+			'brak' 	=> 0
+		);
+
+		if( $levels[ $level1 ] < $levels[ $level2 ] ) {
+			return ($levels[ $level1 ] + 1) / $levels[ $level2 ];
+		} else {
+			return false;
+		}
 	}
 
 

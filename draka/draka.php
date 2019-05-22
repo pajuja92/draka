@@ -18,18 +18,14 @@ function get_plugin_part_template( $path ) {
   }
 }
 
+function draka_enqueue_scripts() {
+
+}
+
 get_plugin_part_template( 'post-types' );
 get_plugin_part_template( 'advanced-custom-fields' );
 get_plugin_part_template( 'core/PageTemplater' );
 get_plugin_part_template( 'core/Draka' );
-
-// add_action('wp_loaded', 'Draka');
-// function Draka() {
-//   // global $draka;
-//   $draka = Draka::get_instance();
-//   //
-//   // $draka->set_user_info( get_userdata( get_current_user_id() ) );
-// }
 
 function register_draka_menus() {
 	register_nav_menus( array(
@@ -42,14 +38,6 @@ add_action( 'after_setup_theme', 'register_draka_menus' );
 
 function var_dumb( $object ) {
   ?><pre><?php var_dump( $object ); ?></pre><?php
-}
-
-function alertt( $obj ) {
-  ?>
-  <script>
-  alert( <?php echo $obj; ?> );
-  </script>
-  <?php
 }
 
 register_activation_hook( __FILE__, 'draka_install');
@@ -70,31 +58,46 @@ function mytheme_customize_register( $wp_customize_draka ) {
       'description'=> 'Tutaj możesz dokonać zmiany ustawień',
       'priority'=> 15,
   ));
-      $wp_customize_draka->add_section('contat_section_menu',array(
+      $wp_customize_draka->add_section('draka_section_menu',array(
           'title'=>'Menu',
           'priority'=>15,
           'panel'=>'settings_panel_draka',
       ));
-              // telefon komórkowy
+
           $wp_customize_draka->add_setting('default_mainpage_url',array(
               'default' => __('#', 'draka'),
 					));
           $wp_customize_draka->add_control('control_mainpage_url',array(
               'label'=>'Strona główna',
               'type'=>'text',
-              'section'=>'contat_section_menu',
+              'section'=>'draka_section_menu',
               'settings'=>'default_mainpage_url',
 					));
 
-              // telefon
           $wp_customize_draka->add_setting('default_ranking_url',array(
               'default' => __('#', 'draka'),
 					));
           $wp_customize_draka->add_control('control_ranking_url',array(
               'label'=>'Strona rankingu',
               'type'=>'text',
-              'section'=>'contat_section_menu',
+              'section'=>'draka_section_menu',
               'settings'=>'default_ranking_url',
+					));
+
+      $wp_customize_draka->add_section('draka_page_widget',array(
+          'title'=>'Widżety ankiety',
+          'priority'=>15,
+          'panel'=>'settings_panel_draka',
+      ));
+
+          $wp_customize_draka->add_setting('default_contact_form',array(
+              'default' => __('', 'draka'),
+					));
+          $wp_customize_draka->add_control('control_contact_form',array(
+              'label'=>'Strona główna',
+              'type'=>'text',
+              'section'=>'draka_page_widget',
+              'settings'=>'default_contact_form',
 					));
 }
 add_action( 'customize_register', 'mytheme_customize_register' );

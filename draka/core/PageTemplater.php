@@ -72,7 +72,8 @@ class PageTemplater {
 		$this->templates = array(
       'template-parts/page-draka.php' 	=> 'Draka - Strona główna',
       'template-parts/page-ranking.php' => 'Draka - ranking',
-      'template-parts/page-ankieta.php' => 'Draka - ankieta',
+			'template-parts/page-ankieta.php' => 'Draka - ankieta',
+      'template-parts/page-with-content.php' => 'Draka - strona z zawartością',
 		);
 
 
