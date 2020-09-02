@@ -15,7 +15,7 @@ class Draka {
 	private $answers;
 	private $answers_levels;
 	private $user_info = array();
-	private $last_answers;
+	private $db_answers;
 	private $user_level;
 
 	/**
@@ -110,7 +110,7 @@ class Draka {
 	function delete_after_deactivate() {
 		return true;
 	}
-
+	
 	function add_answer( $args ) {
 		$this->answers[ $args['name'] ] = $args;
 	}
@@ -142,51 +142,49 @@ class Draka {
 		return $this->user_info->user_met;
 	}
 
-
 	function get_points( $id, $i ) {
 		return $this->answers[ $id ]['scores'][ $i ];
 	}
 
 	function get_level( $id, $i ) {
-		return $this->anwers[ $id ]['levels'][ $i ];
+		return $this->answers[ $id ]['levels'][ $i ];
 	}
 
 	function submit_callback() {
 		global $jal_db_version;
 		$jal_db_version = "1.0";
-	  global $wpdb; // this is how you get access to the database
-	  $user_table_name = $wpdb->prefix . "draka_save";
+	 	global $wpdb; // this is how you get access to the database
+	  	$user_table_name = $wpdb->prefix . "draka_save";
 		$answers_table_name = $wpdb->prefix . "draka_answers";
 
-	  $this->user_answers = array();
-	  $this->user_answers = json_decode( str_replace("\\", null, $_POST['user_answers'] ) , false);
+	  	$this->user_answers = array();
+	  	$this->user_answers = json_decode( str_replace("\\", null, $_POST['user_answers'] ) , false); 	// grola: https://developer.wordpress.org/reference/functions/wp_unslash/
+      																									// grola: tutaj trzeba zrobić sanityzację tego co przychodzi od użytkownika
 
-
-	  $score = 0;
-	  foreach ($this->user_answers as $answer) {
+		$score = 0;
+		foreach ($this->user_answers as $answer) {
 			$level_name = $this->answers[ $answer->name ][ 'levels' ][ $answer->value ];
 			$this->user_answers['levels'][ $level_name ] += 1;
 
 			$multi = $this->is_level_smaller( $this->get_user_level(1), $level_name );
-			echo "<br>" . $this->get_user_level(1) . " : " . $level_name . " = " . $multi;
 			if( $multi && $multi != 1) {
 				$score += ($this->get_points( $answer->name, $answer->value ) * $multi );
 			} else {
 				$score += $this->answers[ $answer->name ]['scores'][ $answer->value ];
 			}
-	  }
+		}
 
-		$current_time = current_time('mysql');
-		$user_table_query = array(
-	    'save_id' => null,
-	    'user_id' => get_current_user_id(),
-	    'user_nicename' => $this->user_info->data->display_name,
-	    'save_date' => $current_time,
-	    'user_sum' => $score,
-	    'user_met' => $this->user_info->user_met,
-	    'user_level' => $this->get_user_level(1)
-	  );
-	  $user_rows_affected = $wpdb->insert( $user_table_name, $user_table_query);
+			$current_time = current_time('mysql');
+			$user_table_query = array(
+			'save_id' => null,
+			'user_id' => get_current_user_id(),
+			'user_nicename' => $this->user_info->data->display_name,
+			'save_date' => $current_time,
+			'user_sum' => $score,
+			'user_met' => $this->user_info->user_met,
+			'user_level' => $this->get_user_level(1)
+		);
+		$user_rows_affected = $wpdb->insert( $user_table_name, $user_table_query);
 
 		$id_select = "
 		SELECT
@@ -194,28 +192,28 @@ class Draka {
 		FROM
 			`wp_draka_save`
 		WHERE
-		 	`user_id`='". get_current_user_id() . "' AND
+			`user_id`='". get_current_user_id() . "' AND
 			`user_nicename`='" . $this->user_info->data->display_name . "' AND
 			`save_date`='" . $current_time . "' AND
-			`user_sum`='" . $score . "' AND
 			`user_met`='" . $this->user_info->user_met . "' AND
 			`user_level`='" . $this->get_user_level(1) . "';";
 
 		$id = $wpdb->get_results( $id_select )[0]->save_id;
+
 		foreach ($this->user_answers as $answer ) {
 			$answers_rows_affected = $wpdb->insert( $answers_table_name, array(
-				'id' 			=> null,
-				'save_id' => $id,
+				'id' 		=> null,
+				'save_id' 	=> $id,
 				'name'		=> $answer->name,
-				'val'			=> $answer->value
+				'val'		=> $answer->value
 
 			));
 		}
 
 
-	  if( $user_rows_affected == 1 ){
-	    echo "Wynik został zapisany.<br>Suma punktów: $score<br>Obecny poziom: " . $this->get_user_level(1);
-	  } else {
+		if( $user_rows_affected == 1 ){
+			echo "Wynik został zapisany.<br>Suma punktów: $score<br>Obecny poziom: " . $this->get_user_level(1);
+		} else {
 			if( !is_user_logged_in() ) {
 				echo "Zmiany NIE zostały zapisane. <a href='" . wp_logout_url() . "'>Zaloguj się!</a>";
 			} elseif( !$this->user_info->user_met ) {
@@ -223,8 +221,9 @@ class Draka {
 			} else {
 				echo "<br>Błąd. Skontaktuj się z administatorem";
 			}
-	  }
-	  die(); // this is required to return a proper result
+		}
+
+		die(); // this is required to return a proper result
 	}
 
 	function load_answers() {
@@ -236,20 +235,20 @@ class Draka {
 		$answers_id_sql = "SELECT `save_id` FROM ( SELECT `user_id`, MAX(`save_date`) AS `save_date`, `user_met` FROM `wp_draka_save` GROUP BY `user_id`, `user_met` ) AS latest_orders INNER JOIN `wp_draka_save` ON `wp_draka_save`.user_id = '$user_id' AND `wp_draka_save`.`save_date` = latest_orders.`save_date` AND `wp_draka_save`.`user_met` = '$user_met'";
 		$id = $wpdb->get_results( $answers_id_sql )[0]->save_id;
 
-		$last_answers_sql = "SELECT * FROM `wp_draka_answers` WHERE `save_id`='$id'";
-		$this->last_answers = $wpdb->get_results( $last_answers_sql );
+		$db_answers_sql = "SELECT * FROM `wp_draka_answers` WHERE `save_id`='$id'";
+		$this->db_answers = $wpdb->get_results( $db_answers_sql );
 
-
-		foreach ($this->last_answers as $answer) {
+		foreach ($this->db_answers as $answer) {
 			$level_name = $this->answers[ $answer->name ][ 'levels' ][ $answer->val ];
-			$this->last_answers['levels'][ $level_name ] += 1;
+			$this->db_answers['levels'][ $level_name ] += 1;
 		}
 
-		foreach ($this->last_answers as $last_answer ) {
+		foreach ($this->db_answers as $last_answer ) {
 			?>
 			<script>
 			jQuery( document ).ready(function() {
-				jQuery('[name*="<?php echo $last_answer->name; ?>"][value*="<?php echo $last_answer->val; ?>"]:radio').prop('checked',true);
+				jQuery('[name*="<?php echo $last_answer->name; ?>"][value*="<?php echo $last_answer->val; ?>"]:radio').prop('checked',true); // grola: wszystko co trafia do przeglądarki warto przepuścić przez funkcje escapujące: https://codex.wordpress.org/Validating_Sanitizing_and_Escaping_User_Data
+                                                                                                                                             // grola: czyli: jQuery('[name*="<?php //echo esc_html( $last_answer->name ); ?>"][value*="<?php //echo esc_html( $last_answer->val ); ?>"]:radio').prop('checked',true);
 			});
 			</script>
 			<?php
@@ -258,16 +257,21 @@ class Draka {
 
 	function get_user_level( $mod ) {
 		$lvl_names = array( 'alfa', 'beta', 'gamma', 'delta' );
-		if ( $mod ) {
-			$this->last_answers = $this->user_answers;
-		}
+		// if ( $mod ) {
+		// 	$this->db_answers = $this->user_answers;
+		// }
+
 		$i = 0;
 		foreach ($lvl_names as $lvl_name) {
-			if( (int) $this->answers['levels'][$lvl_name] - $i <= (int) $this->last_answers['levels'][$lvl_name] &&
-					$this->last_answers['levels'][$lvl_name] != 0 ) {
+			// echo "start<br>";
+			// echo "val1: " . $this->answers['levels'][$lvl_name];
+			// echo "<br>val2: " . $this->db_answers['levels'][$lvl_name] . "<br><br>";
+
+			if( (int) $this->answers['levels'][$lvl_name] - $i <= (int) $this->db_answers['levels'][$lvl_name] &&
+					$this->db_answers['levels'][$lvl_name] != 0 ) {
 				return $lvl_name;
 			}
-			$i += $this->last_answers['levels'][$lvl_name];
+			$i += $this->db_answers['levels'][$lvl_name];
 		}
 		return 'brak';
 	}
@@ -278,14 +282,15 @@ class Draka {
 
 	function fill_answers() {
 		$args = array(
-			'post_type' => 'draka'
+			'post_type' => 'draka',
+			'posts_per_page' => -1,
 		);
 		$pytania = new WP_Query( $args );
 
 		while ( $pytania->have_posts() ) : $pytania->the_post();
 			$pyt_args = array(
-			  'name' => get_the_ID(),
-			  'scores' => array(),
+			  	'name' => get_the_ID(),
+			  	'scores' => array(),
 				'levels' => array(),
 			);
 
@@ -354,10 +359,10 @@ class Draka {
 							?>
 							<tr>
 								<td class="table-column lp"><?php echo $i++; ?></td>
-								<td class="table-column name"><?php echo $result->user_nicename; ?></td>
-								<td class="table-column score"><?php echo $result->user_sum; ?></td>
-								<td class="table-column badge"><?php echo $result->user_level; ?></td>
-								<td class="table-column met"><?php echo $result->user_met; ?></td>
+								<td class="table-column name"><?php echo $result->user_nicename; ?></td> <!-- // grola: escapowanie: <?php //echo esc_html( $result->user_nicename ); ?> -->
+								<td class="table-column score"><?php echo $result->user_sum; ?></td> <!-- // grola: escapowanie -->
+								<td class="table-column badge"><?php echo $result->user_level; ?></td> <!-- // grola: escapowanie -->
+								<td class="table-column met"><?php echo $result->user_met; ?></td> <!-- // grola: escapowanie -->
 							</tr>
 							<?php
 						}

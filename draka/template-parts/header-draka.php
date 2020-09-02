@@ -29,8 +29,8 @@
       <nav id="top-menu">
         <ul>
           <li class="top-menu-item item-1">
-            <a href="<?php echo $draka_mainpage_url; ?>">
-              <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Strona Główna">
+            <a href="<?php echo $draka_mainpage_url; ?>"> <!-- // grola: escapowanie: <?php echo esc_url( $draka_mainpage_url ); ?> -->
+              <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Strona Główna"> <!-- // grola: escapowanie, poniżej również trzeba dodać tam gdzie nie ma. -->
               <h4 class="menu-heading">Strona Główna</h4>
             </a>
           </li>

@@ -10,6 +10,9 @@ jQuery( document ).ready( function() {
         jQuery( "#" + id ).slideDown("fast");
       });
     } else {
+      jQuery('.subcategory-toggle').removeClass('active');
+
+      jQuery( this ).addClass('active')
       jQuery('.subcategory-container').slideDown("fast");
     }
   });

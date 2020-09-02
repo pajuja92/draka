@@ -22,7 +22,7 @@ $kategorie = get_terms( 'draka_category', array(
 <div id="site-content">
   <div id="main-container" class="col-8-d col-12-t col-12-m">
 
-    <div class="subcategory-toggle" for="all">
+    <div class="subcategory-toggle active" for="all">
       <h2>Wszystkie</h2>
     </div>
     <?php foreach ($kategorie as $kategoria) {  ?>
@@ -50,7 +50,9 @@ $kategorie = get_terms( 'draka_category', array(
   </div>
   <div class="col-4-d col-0-t col-0-m">
     <?php if ( $customized_shortcode ) : ?>
-      <?php echo do_shortcode( $customized_shortcode ); ?>
+      <div class="sticky-box">
+        <?php echo do_shortcode( $customized_shortcode ); ?>
+      </div>
     <?php else: ?>
       <img src='<?php echo DRAKA_URL . "img/parts/lion.png"; ?>' alt="Lew prawy" id="lion-right" class="sticky">
     <?php endif; ?>

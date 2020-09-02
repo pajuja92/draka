@@ -7,6 +7,8 @@
   foreach( $podkategorie as $podkategoria ) {
     $args = array(
       'post_type' => 'draka',
+      'orderby' => array( 'title' => 'DESC', 'menu_order' => 'ASC' ),
+      'posts_per_page' => -1,
       'tax_query' => array(
           'relation' => 'AND',
           array(
@@ -25,7 +27,7 @@
     $pytania = new WP_Query( $args );
     $kat = get_term_by('id', $podkategoria, 'draka_category' );
 
-    echo '<h2 class="question">' . $kat->name . '</h2>';
+    echo '<h2 class="question">' . $kat->name . '</h2>'; // grola: escapowanie
 
     if ( $pytania->have_posts() ) :
       global $numer_pytania;

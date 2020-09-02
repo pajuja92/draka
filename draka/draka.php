@@ -22,10 +22,10 @@ function draka_enqueue_scripts() {
 
 }
 
-get_plugin_part_template( 'post-types' );
-get_plugin_part_template( 'advanced-custom-fields' );
-get_plugin_part_template( 'core/PageTemplater' );
-get_plugin_part_template( 'core/Draka' );
+get_plugin_part_template( 'post-types' ); // grola: include __DIR__ . '/post-types.php';
+get_plugin_part_template( 'advanced-custom-fields' ); // grola: include __DIR__ . '/advanced-custom-fields.php';
+get_plugin_part_template( 'core/PageTemplater' ); // grola: include __DIR__ . '/core/PageTemplater.php';
+get_plugin_part_template( 'core/Draka' ); // grola: include __DIR__ . '/core/Draka.php';
 
 function register_draka_menus() {
 	register_nav_menus( array(
