@@ -4,7 +4,7 @@
  * Description: System współzawodnictwa skierowany jest do drużynowych z Hufca ZHP Gdańsk-Śródmieście
  * Author: Mateusz Okła
  * Author URI: https://mateuszokla.pl/
- * Version: 1.0.69
+ * Version: 1.0.0
  */
 
 define( 'DRAKA_URL', plugin_dir_url( __FILE__ ) );
