@@ -33,7 +33,6 @@ class Draka {
 	 * Constructor for class
 	 */
 	public function __construct()	{
-	    echo "Konstruuję Drakę";
 		if( null == $this->is_installed ) {
 			$this->install();
 			$this->is_installed = true;
@@ -319,84 +318,62 @@ class Draka {
 		  `wp_draka_save`.`user_met` = '" . $_POST['metodyka'] . "';
 		";
 		$results = $wpdb->get_results( $select ); // Query to fetch data from database table and storing in $results
-		if(!empty($results)) :
-		  $sortArray = array();
 
-		  foreach($results as $result){
-		      foreach($result as $key=>$value){
-		          if(!isset($sortArray[$key])){
-		              $sortArray[$key] = array();
-		          }
-		          $sortArray[$key][] = $value;
-		      }
-		  }
+        $this->display_ranking_table( $results );
 
-		  $orderby = "user_sum"; //change this to whatever key you want from the array
-		  array_multisort($sortArray[$orderby],SORT_DESC,$results);
-			?>
-			<tbody>
-				<tr>
-					<th class="table-column lp">LP</th>
-					<th class="table-column name">Nazwa jednostki</th>
-					<th class="table-column score">Liczba punktów</th>
-					<th class="table-column badge">Odnzaka</th>
-					<th class="table-column met">Metodyka</th>
-				</tr>
-				<?php
-					$i = 1;
-					if( !empty( $results ) ) :
-						foreach( $results as $result ) {
-							?>
-							<tr>
-								<td class="table-column lp"><?php echo $i++; ?></td>
-								<td class="table-column name"><?php echo $result->user_nicename; ?></td> <!-- // grola: escapowanie: <?php //echo esc_html( $result->user_nicename ); ?> -->
-								<td class="table-column score"><?php echo $result->user_sum; ?></td> <!-- // grola: escapowanie -->
-								<td class="table-column badge"><?php echo $result->user_level; ?></td> <!-- // grola: escapowanie -->
-								<td class="table-column met"><?php echo $result->user_met; ?></td> <!-- // grola: escapowanie -->
-							</tr>
-							<?php
-						}
-					endif;
-					?>
-			</tbody>
-			<?php
-		else:
-			echo "Nikt z tej metodyki nie wypełnił jeszcze ankiety";
-		endif;
 		die();
 	}
 
-	function is_level_greater( $level1, $level2 ) {
-		$levels = array(
-			'alfa' 	=> 4,
-			'beta' 	=> 3,
-			'gamma' => 2,
-			'delta' => 1,
-			'brak' 	=> 0
-		);
+	public function display_ranking_table( $results ) {
 
-		if( $levels[ $level1 ] > $levels[ $level2 ] ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if(!empty($results)) :
+            $sortArray = array();
 
-	function is_level_smaller( $level1, $level2 ) {
-		$levels = array(
-			'alfa' 	=> 4,
-			'beta' 	=> 3,
-			'gamma' => 2,
-			'delta' => 1,
-			'brak' 	=> 0
-		);
+            foreach($results as $result){
+                foreach($result as $key=>$value){
+                    if(!isset($sortArray[$key])){
+                        $sortArray[$key] = array();
+                    }
+                    $sortArray[$key][] = $value;
+                }
+            }
 
-		if( $levels[ $level1 ] < $levels[ $level2 ] ) {
-			return ($levels[ $level1 ] + 1) / $levels[ $level2 ];
-		} else {
-			return false;
-		}
-	}
+            $orderby = "user_nicename"; //change this to whatever key you want from the array
+            array_multisort($sortArray[$orderby],SORT_DESC,$results);
+            ?>
+            <tbody>
+            <tr>
+                <th class="table-column lp" onclick="sortTable( 0, 'int' )">LP</th>
+                <th class="table-column name" onclick="sortTable( 1, 'str' )">Nazwa jednostki</th>
+                <th class="table-column score" onclick="sortTable( 2, 'int' )">Liczba punktów</th>
+                <th class="table-column change" onclick="sortTable( 3, 'int' )">Przyrost punktów w tym roku</th>
+                <th class="table-column date" onclick="sortTable( 4, 'str' )">Ostatnie uzupełnienie</th>
+
+            </tr>
+            <?php
+            $i = 1;
+            if( !empty( $results ) ) :
+                foreach( $results as $result ) {
+                    ?>
+                    <tr>
+                        <td class="table-column lp"><?php echo $i++; ?></td>
+                        <td class="table-column name"><?php echo esc_html( $result->user_nicename ); ?></td>
+                        <td class="table-column score"><?php echo esc_html( $result->user_sum ); ?></td>
+                        <td class="table-column change"><?php echo esc_html( 0 ); ?></td>
+                        <td class="table-column date"><?php echo  esc_html( $result->save_date ); ?></td>
+                    </tr>
+                    <?php
+                }
+            endif;
+            ?>
+            </tbody>
+        <?php
+        else:
+            echo "Nikt z tej metodyki nie wypełnił jeszcze ankiety";
+        endif;
+
+    }
+
 
 
 }

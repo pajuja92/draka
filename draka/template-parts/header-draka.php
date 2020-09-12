@@ -1,6 +1,7 @@
 <?php
-  $draka_mainpage_url = get_theme_mod('default_mainpage_url');
-  $draka_ranking_url = get_theme_mod('default_ranking_url');
+    $draka_mainpage_url = get_theme_mod('default_mainpage_url');
+    $draka_ankieta_url = get_theme_mod('default_ankieta_url');
+    $draka_ranking_url = get_theme_mod('default_ranking_url');
 ?>
 
 <!DOCTYPE html>
@@ -16,22 +17,25 @@
   </head>
   <body>
     <header>
-      <div id="site-logo">
-        <h1 class="logo-heading">
-          <span class="logo-letter letter-1">D</span>
-          <span class="logo-letter letter-2">R</span>
-          <span class="logo-letter letter-3">A</span>
-          <span class="logo-letter letter-4">K</span>
-          <span class="logo-letter letter-5">A</span>
-      </h1>
-      </div>
+        <a class="clear-style" href="<?php echo esc_url( $draka_ankieta_url ); ?>">
+            <div id="site-logo">
+                <h1 class="logo-heading">
+                    <span class="logo-letter letter-1">D</span>
+                    <span class="logo-letter letter-2">R</span>
+                    <span class="logo-letter letter-3">A</span>
+                    <span class="logo-letter letter-4">K</span>
+                    <span class="logo-letter letter-5">A</span>
+                </h1>
+            </div>
+        </a>
+
 
       <nav id="top-menu">
         <ul>
           <li class="top-menu-item item-1">
-            <a href="<?php echo $draka_mainpage_url; ?>"> <!-- // grola: escapowanie: <?php echo esc_url( $draka_mainpage_url ); ?> -->
+            <a href="<?php echo esc_url( $draka_ankieta_url ); ?>"> <!-- // grola: escapowanie: <?php echo esc_url( $draka_mainpage_url ); ?> -->
               <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Strona Główna"> <!-- // grola: escapowanie, poniżej również trzeba dodać tam gdzie nie ma. -->
-              <h4 class="menu-heading">Strona Główna</h4>
+              <h4 class="menu-heading">Ankieta</h4>
             </a>
           </li>
           <li class="top-menu-item item-2">

@@ -27,9 +27,6 @@ class User
         $this->ageGroup = get_field('wybrana_metodyka', 'user_'. $this->id );
         $this->answers = $this->get_answers_from_db();
         $this->scoreSum = 0;
-
-
-        echo $this->ageGroup;
     }
 
     public static function get_instance() {

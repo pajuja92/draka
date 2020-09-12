@@ -60,51 +60,61 @@ function draka_uninstall() {
 }
 
 function mytheme_customize_register( $wp_customize_draka ) {
-  $wp_customize_draka->add_panel('settings_panel_draka',array(
+    $wp_customize_draka->add_panel('settings_panel_draka',array(
       'title'=>'Draka',
       'description'=> 'Tutaj możesz dokonać zmiany ustawień',
       'priority'=> 15,
-  ));
-      $wp_customize_draka->add_section('draka_section_menu',array(
+    ));
+        $wp_customize_draka->add_section('draka_section_menu',array(
           'title'=>'Menu',
           'priority'=>15,
           'panel'=>'settings_panel_draka',
-      ));
+        ));
 
-          $wp_customize_draka->add_setting('default_mainpage_url',array(
+            $wp_customize_draka->add_setting('default_mainpage_url',array(
               'default' => __('#', 'draka'),
-					));
-          $wp_customize_draka->add_control('control_mainpage_url',array(
+            ));
+            $wp_customize_draka->add_control('control_mainpage_url',array(
               'label'=>'Strona główna',
               'type'=>'text',
               'section'=>'draka_section_menu',
               'settings'=>'default_mainpage_url',
-					));
+            ));
 
-          $wp_customize_draka->add_setting('default_ranking_url',array(
+            $wp_customize_draka->add_setting('default_ankieta_url',array(
+                'default' => __('/ankieta/', 'draka'),
+            ));
+            $wp_customize_draka->add_control('control_ankieta_url',array(
+                'label'=>'Strona ankiety',
+                'type'=>'text',
+                'section'=>'draka_section_menu',
+                'settings'=>'default_ankieta_url',
+            ));
+
+            $wp_customize_draka->add_setting('default_ranking_url',array(
               'default' => __('#', 'draka'),
-					));
-          $wp_customize_draka->add_control('control_ranking_url',array(
+            ));
+            $wp_customize_draka->add_control('control_ranking_url',array(
               'label'=>'Strona rankingu',
               'type'=>'text',
               'section'=>'draka_section_menu',
               'settings'=>'default_ranking_url',
-					));
+            ));
 
-      $wp_customize_draka->add_section('draka_page_widget',array(
+        $wp_customize_draka->add_section('draka_page_widget',array(
           'title'=>'Widżety ankiety',
           'priority'=>15,
           'panel'=>'settings_panel_draka',
-      ));
+        ));
 
-          $wp_customize_draka->add_setting('default_contact_form',array(
+            $wp_customize_draka->add_setting('default_contact_form',array(
               'default' => __('', 'draka'),
-					));
-          $wp_customize_draka->add_control('control_contact_form',array(
+            ));
+            $wp_customize_draka->add_control('control_contact_form',array(
               'label'=>'Strona główna',
               'type'=>'text',
               'section'=>'draka_page_widget',
               'settings'=>'default_contact_form',
-					));
+            ));
 }
 add_action( 'customize_register', 'mytheme_customize_register' );

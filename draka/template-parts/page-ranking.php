@@ -5,7 +5,18 @@
    */
 ?>
 
-<?php get_plugin_part_template('template-parts/header-draka'); ?>
+<?php
+
+    get_plugin_part_template('template-parts/header-draka');
+    $user = User::get_instance();
+
+?>
+
+<script>
+    jQuery( document ).ready( function() {
+       jQuery( '.choose-met[for=<?php echo$user->get_ageGroup(); ?>]').click();
+    });
+</script>
 
 <div id="site-content">
   <div id="main-container" class="col-8-d col-12-t col-12-m">

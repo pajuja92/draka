@@ -28,6 +28,10 @@ p {
     line-height: 1.7em;
 }
 
+a.clear-style {
+  text-decoration: none;
+}
+
 .clearfix {
   overflow: auto;
   clear: both;
@@ -303,8 +307,8 @@ span.wpcf7-form-control-wrap {
 #site-content {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
-  height: 100%
+  height: 100%;
+  padding: 15px;
 }
 
 #lion-left, #lion-right {
@@ -332,7 +336,7 @@ h1.site-heading {
 }
 
 #main-container {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 
 #menu-main {
@@ -381,13 +385,29 @@ h1.site-heading {
 
 table {
   border-collapse: collapse;
+  width: 100%;
+}
+
+table > tbody {
+  display: contents;
 }
 
 th.table-column {
   padding: 5px;
+  cursor: pointer;
 }
 
-td.table-column.lp, td.table-column.score, td.table-column.badge, td.table-column.met {
+.table-column.change,
+.table-column.score,
+.table-column.date {
+  max-width: 110px;
+}
+td.table-column.lp,
+td.table-column.score,
+td.table-column.badge,
+td.table-column.date,
+td.table-column.change,
+td.table-column.met {
   text-align: center;
 }
 
@@ -459,9 +479,10 @@ label.draka_option {
 
 button.choose-met {
   border: 3px solid transparent;
-  background: white;
+  background: transparent;
   border-radius: 10px;
   padding: 4px 5px;
+  cursor: pointer;
 }
 
 button.choose-met.active {
@@ -474,6 +495,14 @@ button.choose-met.active {
 
 button.choose-met:focus {
   outline: none;
+}
+
+button.choose-met:hover {
+  padding: 5px;
+}
+
+.choose-met:hover img {
+  width: calc( 100% - 10px );
 }
 
 thead, tbody {
