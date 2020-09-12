@@ -72,7 +72,7 @@ function mytheme_customize_register( $wp_customize_draka ) {
         ));
 
             $wp_customize_draka->add_setting('default_mainpage_url',array(
-              'default' => __('#', 'draka'),
+              'default' => __('/', 'draka'),
             ));
             $wp_customize_draka->add_control('control_mainpage_url',array(
               'label'=>'Strona główna',

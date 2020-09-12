@@ -1,7 +1,7 @@
 <?php
-    $draka_mainpage_url = get_theme_mod('default_mainpage_url');
-    $draka_ankieta_url = get_theme_mod('default_ankieta_url');
-    $draka_ranking_url = get_theme_mod('default_ranking_url');
+    $draka_mainpage_url = get_theme_mod( 'default_mainpage_url' );
+    $draka_ankieta_url = get_theme_mod( 'default_ankieta_url' );
+    $draka_ranking_url = get_theme_mod( 'default_ranking_url' );
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
   </head>
   <body>
     <header>
-        <a class="clear-style" href="<?php echo esc_url( $draka_ankieta_url ); ?>">
+        <a class="clear-style" href="<?php echo esc_url( $draka_mainpage_url ); ?>">
             <div id="site-logo">
                 <h1 class="logo-heading">
                     <span class="logo-letter letter-1">D</span>
@@ -30,40 +30,43 @@
         </a>
 
 
-      <nav id="top-menu">
+    <nav id="top-menu">
         <ul>
-          <li class="top-menu-item item-1">
-            <a href="<?php echo esc_url( $draka_ankieta_url ); ?>"> <!-- // grola: escapowanie: <?php echo esc_url( $draka_mainpage_url ); ?> -->
-              <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Strona Główna"> <!-- // grola: escapowanie, poniżej również trzeba dodać tam gdzie nie ma. -->
+            <li class="top-menu-item item-1">
+            <a href="<?php echo esc_url( $draka_ankieta_url ); ?>"> <!-- // grola: escapowanie: <?php echo esc_url( $draka_ankieta_url ); ?> -->
+              <img src="<?php echo DRAKA_URL . 'img/header/main.png'; ?>" alt="Ankieta"> <!-- // grola: escapowanie, poniżej również trzeba dodać tam gdzie nie ma. -->
               <h4 class="menu-heading">Ankieta</h4>
             </a>
-          </li>
-          <li class="top-menu-item item-2">
+            </li>
+            <li class="top-menu-item item-2">
             <a href="<?php echo $draka_ranking_url; ?>">
               <img src="<?php echo DRAKA_URL . 'img/header/ranking.png'; ?>" alt="Ranking">
               <h4 class="menu-heading">Ranking</h4>
             </a>
-          </li>
-          <li class="top-menu-item item-3">
-            <a href="<?php echo get_site_url() . '/wp-admin/profile.php'; ?>">
-              <?php
-                $wybrana_metodyka = get_field('wybrana_metodyka', 'user_'. get_current_user_id() );
-                if( $wybrana_metodyka ) :
-              ?>
-                <img src="<?php echo DRAKA_URL . 'img/header/znak-met-' . $wybrana_metodyka . '.png'; ?>" alt="Moje konto">
-                <h4 class="menu-heading">Moje konto</h4>
-              <?php else: ?>
-                <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Moje konto">
-                <h4 class="menu-heading">Moje konto</h4>
-              <?php endif; ?>
+            </li>
+            <?php if( is_user_logged_in() ): ?>
+                <li class="top-menu-item item-3">
+                    <a href="<?php echo get_site_url() . '/wp-admin/profile.php'; ?>">
+                      <?php
+                        $wybrana_metodyka = get_field('wybrana_metodyka', 'user_'. get_current_user_id() );
+                        if( $wybrana_metodyka ) :
+                      ?>
+                        <img src="<?php echo DRAKA_URL . 'img/header/znak-met-' . $wybrana_metodyka . '.png'; ?>" alt="Moje konto">
+                        <h4 class="menu-heading">Moje konto</h4>
+                      <?php else: ?>
+                        <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Moje konto">
+                        <h4 class="menu-heading">Moje konto</h4>
+                      <?php endif; ?>
 
-            </a>
-          </li>
-          <?php if( !is_user_logged_in() ): ?>
+                    </a>
+                  </li>
+            <?php endif; ?>
+
+            <?php if( !is_user_logged_in() ): ?>
             <li class="top-menu-item item-4">
               <a href="<?php echo wp_login_url(); ?>">
                 <img src="<?php echo DRAKA_URL . 'img/header/account.png'; ?>" alt="Zaloguj">
-                <h4 class="menu-heading">Wyloguj</h4>
+                <h4 class="menu-heading">Zaloguj</h4>
               </a>
             </li>
           <?php else: ?>
