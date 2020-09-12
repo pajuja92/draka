@@ -9,6 +9,7 @@
       'post_type' => 'draka',
       'orderby' => array( 'title' => 'DESC', 'menu_order' => 'ASC' ),
       'posts_per_page' => -1,
+      'status'  => 'published',
       'tax_query' => array(
           'relation' => 'AND',
           array(
@@ -30,11 +31,15 @@
     echo '<h2 class="question">' . $kat->name . '</h2>'; // grola: escapowanie
 
     if ( $pytania->have_posts() ) :
+
       global $numer_pytania;
       $numer_pytania = 1;
       while ( $pytania->have_posts() ) : $pytania->the_post();
+
         get_plugin_part_template('template-parts/ankieta-pytanie');
+
       endwhile; wp_reset_postdata();
+
     endif;
   }
 ?>

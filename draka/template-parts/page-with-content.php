@@ -10,6 +10,27 @@
       echo $content;
      ?>
 
+    <?php 
+  
+
+      $arr = array(
+        "Is your name O\'reilly?",
+        "Person\'s Assets"
+      );
+
+      echo $arr;
+      echo '<pre>';
+      var_dump( $arr );
+      echo '</pre>';
+
+      $arr = wp_unslash( $arr );
+
+      echo '<pre>';
+      var_dump( $arr );
+      echo '</pre>';
+
+    
+    ?>
   </div>
   <div class="col-4-d col-0-t col-0-m">
       <img src='<?php echo DRAKA_URL . "img/parts/lion.png"; ?>' alt="Lew prawy" id="lion-right" class="sticky">

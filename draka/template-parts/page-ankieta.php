@@ -5,6 +5,9 @@
 
 $draka = Draka::get_instance();
 $draka->load_answers();
+
+//$questions = Questions::get_instance();
+
 $customized_shortcode = get_theme_mod('default_contact_form');
 
 if( !is_user_logged_in() ) {

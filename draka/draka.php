@@ -4,7 +4,7 @@
  * Description: System współzawodnictwa skierowany jest do drużynowych z Hufca ZHP Gdańsk-Śródmieście
  * Author: Mateusz Okła
  * Author URI: https://mateuszokla.pl/
- * Version: 1.0.0
+ * Version: 1.1
  */
 
 define( 'DRAKA_URL', plugin_dir_url( __FILE__ ) );
@@ -22,10 +22,17 @@ function draka_enqueue_scripts() {
 
 }
 
-get_plugin_part_template( 'post-types' ); // grola: include __DIR__ . '/post-types.php';
-get_plugin_part_template( 'advanced-custom-fields' ); // grola: include __DIR__ . '/advanced-custom-fields.php';
-get_plugin_part_template( 'core/PageTemplater' ); // grola: include __DIR__ . '/core/PageTemplater.php';
-get_plugin_part_template( 'core/Draka' ); // grola: include __DIR__ . '/core/Draka.php';
+include __DIR__ . '/post-types.php';
+include __DIR__ . '/advanced-custom-fields.php';
+include __DIR__ . '/core/PageTemplater.php';
+include __DIR__ . '/core/Draka.php';
+include __DIR__ . '/core/User.php';
+include __DIR__ . '/core/Question.php';
+include __DIR__ . '/core/Questions.php';
+include __DIR__ . '/core/Answer.php';
+include __DIR__ . '/core/Database.php';
+include __DIR__ . '/core/Options.php';
+
 
 function register_draka_menus() {
 	register_nav_menus( array(

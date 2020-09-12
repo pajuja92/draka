@@ -43,14 +43,11 @@ function my_qc_form_callback() {
   $table_name = $wpdb->prefix . "draka_save";
   $values = array();
   $values = json_decode( str_replace("\\", null, $_POST['answers'] ) , false); // grola: https://developer.wordpress.org/reference/functions/wp_unslash/
-  $user_id = $_POST['user_id']; // grola: $user_id = sanitize_key( $_POST['user_id'] ); https://developer.wordpress.org/reference/functions/sanitize_key/
+  $user_id = $_POST['user_id']; // grola: $user_id = sanitize_key( $_POST['user_id'] ); // https://developer.wordpress.org/reference/functions/sanitize_key/
   $user_nicename = $_POST['user_nicename']; // grola: sanityzacja https://developer.wordpress.org/reference/functions/sanitize_text_field/
   $choosen_met = $_POST['choosen_met']; // grola: sanityzacja https://developer.wordpress.org/reference/functions/sanitize_text_field/
   $user_level = $_POST['user_level']; // grola: sanityzacja https://developer.wordpress.org/reference/functions/sanitize_text_field/
 
-  // echo "<pre>";
-  // var_dump( $values );
-  // echo "</pre>";
   $score = 0;
   foreach ($values as $key) {
     $score += $key->value;
