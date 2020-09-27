@@ -14,7 +14,7 @@
 
 <script>
     jQuery( document ).ready( function() {
-       jQuery( '.choose-met[for=<?php echo$user->get_ageGroup(); ?>]').click();
+       jQuery( '.choose-met[for=<?php echo$user->get_age_group(); ?>]').click();
     });
 </script>
 
@@ -23,18 +23,16 @@
       <h1 class="site-heading">Ranking</h1>
 
     <script>
-
-
-    function get_ajax_response(e) {
-      var met = jQuery( e ).attr('for');
-      var data = {
-          action: "draka_seek_results_callback",
-          metodyka: met
-      };
-      jQuery.post("<?php echo admin_url("admin-ajax.php"); ?>", data, function(response) {
-          jQuery('#ranking-table').html(response);
-      });
-    }
+        function get_ajax_response(e) {
+          var met = jQuery( e ).attr('for');
+          var data = {
+              action: "draka_seek_results_callback",
+              metodyka: met
+          };
+          jQuery.post("<?php echo admin_url("admin-ajax.php"); ?>", data, function(response) {
+              jQuery('#ranking-table').html(response);
+          });
+        }
     </script>
 
     <div class="choose-met-container">

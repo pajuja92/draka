@@ -17,13 +17,50 @@ class Questions
     /**
      * Questions constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
+         $this->create_fields();
+    }
+
+    public static function get_instance() {
+        if ( null == self::$instance ) {
+            self::$instance = new Questions();
+        }
+        return self::$instance;
+    }
+
+    public function get_question( $id ) {
+        return $id;
+    }
+
+    public function get_question_content( $id ) {
+        return $this->questions[ $id ]->get_content();
+    }
+
+    public function get_tip_text( $id ) {
+        return $this->questions[ $id ]->get_tipText();
+    }
+
+    public function get_options( $id ) {
+        return $this->questions[ $id ]->get_options();
+    }
+
+    /**
+     * @param $name - to jest ID pytania, ale jest zwalona nazwa - trzeba poprawić
+     * @param $value
+     * @param $ageGroup
+     * @return mixed
+     */
+    public function get_question_score( $name, $value, $ageGroup ) {
+        return $this->questions[ $name ]->get_option_score( $value, $ageGroup );
+    }
+
+    public function create_fields() {
         $this->questions = array();
 
         $args = array(
             'post_type' => 'draka',
             'posts_per_page' => -1,
+            'post_status' => 'publish'
         );
         $pytania = new WP_Query( $args );
 
@@ -67,40 +104,4 @@ class Questions
 
         endwhile; wp_reset_postdata();
     }
-
-    public static function get_instance() {
-        if ( null == self::$instance ) {
-            self::$instance = new Questions();
-        }
-        return self::$instance;
-    }
-
-    public function get_question( $id ) {
-        return $id;
-    }
-
-    public function get_question_content( $id ) {
-        return $this->questions[ $id ]->get_content();
-    }
-
-    public function get_tip_text( $id ) {
-        return $this->questions[ $id ]->get_tipText();
-    }
-
-    public function get_options( $id ) {
-        return $this->questions[ $id ]->get_options();
-    }
-
-    /**
-     * @param $name - to jest ID pytania, ale jest zwalona nazwa - trzeba poprawić
-     * @param $value
-     * @param $ageGroup
-     * @return mixed
-     */
-    public function get_question_score( $name, $value, $ageGroup ) {
-        return $this->questions[ $name ]->get_option_score( $value, $ageGroup );
-    }
-
-
-
 }

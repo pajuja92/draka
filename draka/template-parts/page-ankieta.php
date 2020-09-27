@@ -4,15 +4,16 @@
 <?php
 
 $draka = Draka::get_instance();
+$user = User::get_instance();
 $draka->load_answers();
 
-//$questions = Questions::get_instance();
+$questions = Questions::get_instance();
 
 $customized_shortcode = get_theme_mod('default_contact_form');
 
 if( !is_user_logged_in() ) {
   echo "<h3 class='warning'>Uwaga! Bez zalogowania część funkcjonalności może nie działać. <a href='" . wp_login_url() . "'>Zaloguj się!</a></h3>";
-} elseif( ! $draka->get_user_met() ) {
+} elseif( !$user->get_age_group() ) {
   echo "<h3 class='warning'>Uwaga! Nie masz wybranej metodyki. Przejdź do  <a href='" . get_edit_profile_url() . "'>panelu edycji profilu</a> i zaktualizuj informacje</h3>";
 }
 

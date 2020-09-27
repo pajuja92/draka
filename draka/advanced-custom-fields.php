@@ -1,7 +1,6 @@
 <?php
 
 
-
 if( function_exists('acf_add_local_field_group') ):
 	$choices = array();
 	$choices['z'] = 'Zuchy';
@@ -12,40 +11,13 @@ if( function_exists('acf_add_local_field_group') ):
 	acf_add_local_field_group(array(
 		'key' => 'group_5cdf32a123acd',
 		'title' => 'Użytkownik',
-		'fields' => array(
-			// array(
-			// 	'key' => 'field_5cdf32ab63ea2',
-			// 	'label' => 'Metodyka',
-			// 	'name' => 'metodyka',
-			// 	'type' => 'checkbox',
-			// 	'instructions' => '',
-			// 	'required' => 0,
-			// 	'conditional_logic' => 0,
-			// 	'wrapper' => array(
-			// 		'width' => '',
-			// 		'class' => '',
-			// 		'id' => '',
-			// 	),
-			// 	'choices' => array(
-			// 		'z' => 'Zuchy',
-			// 		'h' => 'Harcerze',
-			// 		'hs' => 'Harcerze Starsi',
-			// 		'w' => 'Wędrownicy',
-			// 	),
-			// 	'allow_custom' => 0,
-			// 	'default_value' => array(
-			// 	),
-			// 	'layout' => 'vertical',
-			// 	'toggle' => 0,
-			// 	'return_format' => 'value',
-			// 	'save_custom' => 0,
-			// ),
+        'fields' => array(
 			array(
 				'key' => 'field_5cdf3c38deaaa',
 				'label' => 'Wybrana metodyka',
 				'name' => 'wybrana_metodyka',
-				'type' => 'select',
-				'instructions' => '',
+                'type' => 'select',
+                'instructions' => 'Wybierz pion, dla którego chcesz uzupełnić ankietę',
 				'required' => 1,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -83,7 +55,80 @@ if( function_exists('acf_add_local_field_group') ):
 		'description' => '',
 	));
 
-	acf_add_local_field_group(array(
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5f6068a2aebe5',
+        'title' => 'Rejestracja',
+        'fields' => array(
+            array(
+                'key' => 'field_5f6069251c4fa',
+                'label' => 'Nazwa jednostki',
+                'name' => 'nazwa_jednostki',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_5f6068a71c4f7',
+                'label' => 'Piony',
+                'name' => 'piony',
+                'type' => 'checkbox',
+                'instructions' => 'Wybierz piony, które są w Twojej jednostce',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'choices' => array(
+                    'z' => 'Zuchy',
+                    'h' => 'Harcerze',
+                    'hs' => 'Harcerze Starsi',
+                    'w' => 'Wędrownicy',
+                    'ns' => 'Nieprzetarty Szlak',
+                ),
+                'allow_custom' => 0,
+                'default_value' => array(
+                ),
+                'layout' => 'vertical',
+                'toggle' => 0,
+                'return_format' => 'array',
+                'save_custom' => 0,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'user_form',
+                    'operator' => '==',
+                    'value' => 'all',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+
+    acf_add_local_field_group(array(
 		'key' => 'group_5ccbf874bb224',
 		'title' => 'Test',
 		'fields' => array(
@@ -292,122 +337,125 @@ acf_add_local_field_group(array(
 					'max' => '',
 					'step' => '1',
 				),
-				array(
-					'key' => 'field_5c75d7ffbda80',
-					'label' => 'Obowiązkowe Z',
-					'name' => 'obowiazkowe_z',
-					'type' => 'select',
-					'instructions' => '',
-					'required' => 1,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '1',
-						'class' => '',
-						'id' => '',
-					),
-					'choices' => array(
-						'brak' => 'Brak',
-						'alfa' => 'Alfa',
-						'beta' => 'Beta',
-						'gamma' => 'Gamma',
-						'delta' => 'Delta',
-					),
-					'default_value' => array(
-					),
-					'allow_null' => 0,
-					'multiple' => 0,
-					'ui' => 0,
-					'return_format' => 'value',
-					'ajax' => 0,
-					'placeholder' => '',
-				),
-				array(
-					'key' => 'field_5c75d7febda7f',
-					'label' => 'Obowiązkowe H',
-					'name' => 'obowiazkowe_h',
-					'type' => 'select',
-					'instructions' => '',
-					'required' => 1,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '1',
-						'class' => '',
-						'id' => '',
-					),
-					'choices' => array(
-						'brak' => 'Brak',
-						'alfa' => 'Alfa',
-						'beta' => 'Beta',
-						'gamma' => 'Gamma',
-						'delta' => 'Delta',
-					),
-					'default_value' => array(
-					),
-					'allow_null' => 0,
-					'multiple' => 0,
-					'ui' => 0,
-					'return_format' => 'value',
-					'ajax' => 0,
-					'placeholder' => '',
-				),
-				array(
-					'key' => 'field_5c75d7fdbda7e',
-					'label' => 'Obowiązkowe HS',
-					'name' => 'obowiazkowe_hs',
-					'type' => 'select',
-					'instructions' => '',
-					'required' => 1,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '1',
-						'class' => '',
-						'id' => '',
-					),
-					'choices' => array(
-						'brak' => 'Brak',
-						'alfa' => 'Alfa',
-						'beta' => 'Beta',
-						'gamma' => 'Gamma',
-						'delta' => 'Delta',
-					),
-					'default_value' => array(
-					),
-					'allow_null' => 0,
-					'multiple' => 0,
-					'ui' => 0,
-					'return_format' => 'value',
-					'ajax' => 0,
-					'placeholder' => '',
-				),
-				array(
-					'key' => 'field_5c75d7fcbda7d',
-					'label' => 'Obowiązkowe W',
-					'name' => 'obowiazkowe_w',
-					'type' => 'select',
-					'instructions' => '',
-					'required' => 1,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '1',
-						'class' => '',
-						'id' => '',
-					),
-					'choices' => array(
-						'brak' => 'Brak',
-						'alfa' => 'Alfa',
-						'beta' => 'Beta',
-						'gamma' => 'Gamma',
-						'delta' => 'Delta',
-					),
-					'default_value' => array(
-					),
-					'allow_null' => 0,
-					'multiple' => 0,
-					'ui' => 0,
-					'return_format' => 'value',
-					'ajax' => 0,
-					'placeholder' => '',
-				),
+
+// Pola, które służyły podczas dodawnia pytania
+// na wybranie poziomu minimalnego dla pytania
+//				array(
+//					'key' => 'field_5c75d7ffbda80',
+//					'label' => 'Obowiązkowe Z',
+//					'name' => 'obowiazkowe_z',
+//					'type' => 'select',
+//					'instructions' => '',
+//					'required' => 1,
+//					'conditional_logic' => 0,
+//					'wrapper' => array(
+//						'width' => '1',
+//						'class' => '',
+//						'id' => '',
+//					),
+//					'choices' => array(
+//						'brak' => 'Brak',
+//						'alfa' => 'Alfa',
+//						'beta' => 'Beta',
+//						'gamma' => 'Gamma',
+//						'delta' => 'Delta',
+//					),
+//					'default_value' => array(
+//					),
+//					'allow_null' => 0,
+//					'multiple' => 0,
+//					'ui' => 0,
+//					'return_format' => 'value',
+//					'ajax' => 0,
+//					'placeholder' => '',
+//				),
+//				array(
+//					'key' => 'field_5c75d7febda7f',
+//					'label' => 'Obowiązkowe H',
+//					'name' => 'obowiazkowe_h',
+//					'type' => 'select',
+//					'instructions' => '',
+//					'required' => 1,
+//					'conditional_logic' => 0,
+//					'wrapper' => array(
+//						'width' => '1',
+//						'class' => '',
+//						'id' => '',
+//					),
+//					'choices' => array(
+//						'brak' => 'Brak',
+//						'alfa' => 'Alfa',
+//						'beta' => 'Beta',
+//						'gamma' => 'Gamma',
+//						'delta' => 'Delta',
+//					),
+//					'default_value' => array(
+//					),
+//					'allow_null' => 0,
+//					'multiple' => 0,
+//					'ui' => 0,
+//					'return_format' => 'value',
+//					'ajax' => 0,
+//					'placeholder' => '',
+//				),
+//				array(
+//					'key' => 'field_5c75d7fdbda7e',
+//					'label' => 'Obowiązkowe HS',
+//					'name' => 'obowiazkowe_hs',
+//					'type' => 'select',
+//					'instructions' => '',
+//					'required' => 1,
+//					'conditional_logic' => 0,
+//					'wrapper' => array(
+//						'width' => '1',
+//						'class' => '',
+//						'id' => '',
+//					),
+//					'choices' => array(
+//						'brak' => 'Brak',
+//						'alfa' => 'Alfa',
+//						'beta' => 'Beta',
+//						'gamma' => 'Gamma',
+//						'delta' => 'Delta',
+//					),
+//					'default_value' => array(
+//					),
+//					'allow_null' => 0,
+//					'multiple' => 0,
+//					'ui' => 0,
+//					'return_format' => 'value',
+//					'ajax' => 0,
+//					'placeholder' => '',
+//				),
+//				array(
+//					'key' => 'field_5c75d7fcbda7d',
+//					'label' => 'Obowiązkowe W',
+//					'name' => 'obowiazkowe_w',
+//					'type' => 'select',
+//					'instructions' => '',
+//					'required' => 1,
+//					'conditional_logic' => 0,
+//					'wrapper' => array(
+//						'width' => '1',
+//						'class' => '',
+//						'id' => '',
+//					),
+//					'choices' => array(
+//						'brak' => 'Brak',
+//						'alfa' => 'Alfa',
+//						'beta' => 'Beta',
+//						'gamma' => 'Gamma',
+//						'delta' => 'Delta',
+//					),
+//					'default_value' => array(
+//					),
+//					'allow_null' => 0,
+//					'multiple' => 0,
+//					'ui' => 0,
+//					'return_format' => 'value',
+//					'ajax' => 0,
+//					'placeholder' => '',
+//				),
 			),
 		),
 	),

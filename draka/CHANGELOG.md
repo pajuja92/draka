@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2] - 2020-09-27
+- added support for result difference
+- reduced database size and query
+
 ## [1.1] - 2020-09-12
 
 - fixed sending form with empty values
