@@ -3,8 +3,11 @@
 <div id="<?php echo $kategoria->slug; ?>" class="subcategory-container">
 
 <?php
-    $podkategorie = get_term_children($kategoria->term_id, 'draka_category');
+    $podkategorie = get_term_children( $kategoria->term_id, 'draka_category' );
+
     foreach( $podkategorie as $podkategoria ) {
+
+
     $args = array(
         'post_type' => 'draka',
         'orderby' => array( 'title' => 'DESC', 'menu_order' => 'ASC' ),
@@ -26,11 +29,14 @@
 
     $pytania = new WP_Query( $args );
 
+    // var_dumb( $pytania );
+
+
     if( sizeof( $pytania->posts ) > 0 ):
         $kat = get_term_by('id', $podkategoria, 'draka_category' );
 
-        echo '<h2 class="question">' . $kat->name . '</h2>'; // grola: escapowanie
-
+        echo '<h2 class="question">' . $kat->name . '</h2>';
+        
         if ( $pytania->have_posts() ) :
 
           global $numer_pytania;
